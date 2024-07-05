@@ -6,9 +6,9 @@ use Unoserver\Converter\Connection\ConnectionInterface;
 use Unoserver\Converter\Source\Document;
 use Unoserver\Converter\Source\Spreadsheet;
 
-class ConverterFactory implements ConverterFactoryInterface
+class ClientBuilder implements ClientBuilderInterface
 {
-    public Converter $converter;
+    public Client $converter;
 
     /**
      * @param class-string<ConnectionInterface> $connectionTypeName
@@ -17,12 +17,12 @@ class ConverterFactory implements ConverterFactoryInterface
     public function initConverter(string $connectionTypeName, array $options): self
     {
         $connection = new $connectionTypeName($options);
-        $this->converter = new Converter($connection);
+        $this->converter = new Client($connection);
 
         return $this;
     }
 
-    public function fromDocument(string $path, bool $deleteSourceFileOnSuccess = false): ConverterInterface
+    public function fromDocument(string $path, bool $deleteSourceFileOnSuccess = false): ClientInterface
     {
         $source = new Document($path, $deleteSourceFileOnSuccess);
         $this->converter->fromSource($source);
@@ -30,7 +30,7 @@ class ConverterFactory implements ConverterFactoryInterface
         return $this->converter;
     }
 
-    public function fromSpreadsheet(string $path, bool $deleteSourceFileOnSuccess = false): ConverterInterface
+    public function fromSpreadsheet(string $path, bool $deleteSourceFileOnSuccess = false): ClientInterface
     {
         $source = new Spreadsheet($path, $deleteSourceFileOnSuccess);
         $this->converter->fromSource($source);

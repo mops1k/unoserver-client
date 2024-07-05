@@ -7,10 +7,8 @@ use PHPUnit\Framework\TestCase;
 use Unoserver\Converter\Connection\ConnectionInterface;
 use Unoserver\Converter\Connection\Local;
 use Unoserver\Converter\Connection\Remote;
-use Unoserver\Converter\Converter;
-use Unoserver\Converter\ConverterFactory;
-use Unoserver\Converter\ConverterFactoryInterface;
-use Unoserver\Converter\ConverterInterface;
+use Unoserver\Converter\Client;
+use Unoserver\Converter\ClientBuilder;
 use Unoserver\Converter\Exception\ConversionException;
 use Unoserver\Converter\Exception\FormatNotSupportedException;
 use Unoserver\Converter\Exception\SourceFileNotExistsException;
@@ -18,7 +16,7 @@ use Unoserver\Converter\Exception\SourceNotDefinedException;
 use Unoserver\Converter\Source\Document;
 use Unoserver\Converter\Source\Format;
 
-class ConverterTest extends TestCase
+class ClientTest extends TestCase
 {
     /**
      * @param int|list<int> $size
@@ -58,6 +56,7 @@ class ConverterTest extends TestCase
         int|array $size,
         string $mimeType
     ): void {
+        $this->markTestSkipped('Until does not install libreoffice inside container');
         $this->runConverterTester(
             Local::class,
             $path,
@@ -73,7 +72,7 @@ class ConverterTest extends TestCase
         $this->expectException(FormatNotSupportedException::class);
         $this->expectExceptionMessage('The format "php" is not supported by source Unoserver\Converter\Source\Document.');
         $options['host'] = 'unoserver';
-        $factory = new ConverterFactory();
+        $factory = new ClientBuilder();
         $factory->initConverter(Remote::class, $options);
         $converter = $factory->fromDocument(__DIR__.'/Stubs/Document.docx');
         $converter->toFormat('php');
@@ -84,7 +83,7 @@ class ConverterTest extends TestCase
         $this->expectException(FormatNotSupportedException::class);
         $this->expectExceptionMessage('The format "xlsx" is not supported by source Unoserver\Converter\Source\Document.');
         $options['host'] = 'unoserver';
-        $factory = new ConverterFactory();
+        $factory = new ClientBuilder();
         $factory->initConverter(Remote::class, $options);
         $converter = $factory->fromDocument(__DIR__.'/Stubs/Document.docx');
         $converter->toFormat(Format::XLSX);
@@ -95,7 +94,7 @@ class ConverterTest extends TestCase
         $this->expectException(ConversionException::class);
         $this->expectExceptionMessage('Conversion process failed.');
         $options['command'] = '/somewhere/unoserver';
-        $factory = new ConverterFactory();
+        $factory = new ClientBuilder();
         $factory->initConverter(Local::class, $options);
         $converter = $factory->fromDocument(__DIR__.'/Stubs/Document.docx');
         $converter->toFormat(Format::EPUB);
@@ -107,7 +106,7 @@ class ConverterTest extends TestCase
         $this->expectException(SourceNotDefinedException::class);
         $this->expectExceptionMessage('Source not defined.');
         $connection = new Remote(['host' => 'unoserver']);
-        $converter = new Converter($connection);
+        $converter = new Client($connection);
         $converter->convert();
     }
 
@@ -136,22 +135,7 @@ class ConverterTest extends TestCase
         if (Remote::class === $connection) {
             $options['host'] = 'unoserver';
         }
-        $factory = new ConverterFactory();
-
-        // ==> start mocks init
-        //        $filename = \pathinfo($path, PATHINFO_FILENAME);
-        //        $convertedExtension = ($format instanceof Format) ? $format->value : $format;
-        //        /** @var ConverterInterface $converter */
-        //        $converter = self::getMockBuilder(Converter::class)->disableOriginalConstructor()->getMock();
-        //        $converter->method('convert')->willReturn(
-        //            new \SplFileInfo(__DIR__.'/Stubs/Converted/'.$filename.'.'.$convertedExtension)
-        //        );
-        //        /** @var ConverterFactoryInterface $factory */
-        //        $factory = self::getMockBuilder(ConverterFactory::class)->getMock();
-        //        $factory->method('initConverter')->with($connection, $options)->willReturn($factory);
-        //        $factory->method('fromDocument')->willReturn($converter);
-        //        $factory->method('fromSpreadsheet')->willReturn($converter);
-        // <== end mocks init
+        $factory = new ClientBuilder();
 
         $factory->initConverter($connection, $options);
         $converter = null;

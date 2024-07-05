@@ -9,7 +9,7 @@ use Unoserver\Converter\Exception\SourceNotDefinedException;
 use Unoserver\Converter\Source\Format;
 use Unoserver\Converter\Source\SourceInterface;
 
-class Converter implements ConverterInterface
+class Client implements ClientInterface
 {
     protected ConnectionInterface $connection;
 

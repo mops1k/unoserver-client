@@ -4,7 +4,7 @@ namespace Unoserver\Converter;
 
 use Unoserver\Converter\Connection\ConnectionInterface;
 
-interface ConverterFactoryInterface
+interface ClientBuilderInterface
 {
     /**
      * @param class-string<ConnectionInterface> $connectionTypeName
@@ -12,7 +12,7 @@ interface ConverterFactoryInterface
      */
     public function initConverter(string $connectionTypeName, array $options): self;
 
-    public function fromDocument(string $path, bool $deleteSourceFileOnSuccess = false): ConverterInterface;
+    public function fromDocument(string $path, bool $deleteSourceFileOnSuccess = false): ClientInterface;
 
-    public function fromSpreadsheet(string $path, bool $deleteSourceFileOnSuccess = false): ConverterInterface;
+    public function fromSpreadsheet(string $path, bool $deleteSourceFileOnSuccess = false): ClientInterface;
 }

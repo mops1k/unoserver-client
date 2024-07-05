@@ -5,7 +5,7 @@ namespace Unoserver\Converter;
 use Unoserver\Converter\Source\Format;
 use Unoserver\Converter\Source\SourceInterface;
 
-interface ConverterInterface
+interface ClientInterface
 {
     public function fromSource(SourceInterface $source): self;
 
