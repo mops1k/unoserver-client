@@ -21,6 +21,8 @@ use Unoserver\Converter\Source\Format;
 class ConverterTest extends TestCase
 {
     /**
+     * @param int|list<int> $size
+     *
      * @throws SourceNotDefinedException
      * @throws \Exception
      */
@@ -43,6 +45,8 @@ class ConverterTest extends TestCase
     }
 
     /**
+     * @param int|list<int> $size
+     *
      * @throws SourceNotDefinedException
      * @throws \Exception
      */
@@ -64,7 +68,7 @@ class ConverterTest extends TestCase
         );
     }
 
-    public function testBadFormatEnum()
+    public function testBadFormatEnum(): void
     {
         $this->expectException(FormatNotSupportedException::class);
         $this->expectExceptionMessage('The format "php" is not supported by source Unoserver\Converter\Source\Document.');
@@ -116,6 +120,7 @@ class ConverterTest extends TestCase
 
     /**
      * @param class-string<ConnectionInterface> $connection
+     * @param int|list<int>                     $size
      *
      * @throws SourceNotDefinedException
      */
@@ -134,18 +139,18 @@ class ConverterTest extends TestCase
         $factory = new ConverterFactory();
 
         // ==> start mocks init
-//        $filename = \pathinfo($path, PATHINFO_FILENAME);
-//        $convertedExtension = ($format instanceof Format) ? $format->value : $format;
-//        /** @var ConverterInterface $converter */
-//        $converter = self::getMockBuilder(Converter::class)->disableOriginalConstructor()->getMock();
-//        $converter->method('convert')->willReturn(
-//            new \SplFileInfo(__DIR__.'/Stubs/Converted/'.$filename.'.'.$convertedExtension)
-//        );
-//        /** @var ConverterFactoryInterface $factory */
-//        $factory = self::getMockBuilder(ConverterFactory::class)->getMock();
-//        $factory->method('initConverter')->with($connection, $options)->willReturn($factory);
-//        $factory->method('fromDocument')->willReturn($converter);
-//        $factory->method('fromSpreadsheet')->willReturn($converter);
+        //        $filename = \pathinfo($path, PATHINFO_FILENAME);
+        //        $convertedExtension = ($format instanceof Format) ? $format->value : $format;
+        //        /** @var ConverterInterface $converter */
+        //        $converter = self::getMockBuilder(Converter::class)->disableOriginalConstructor()->getMock();
+        //        $converter->method('convert')->willReturn(
+        //            new \SplFileInfo(__DIR__.'/Stubs/Converted/'.$filename.'.'.$convertedExtension)
+        //        );
+        //        /** @var ConverterFactoryInterface $factory */
+        //        $factory = self::getMockBuilder(ConverterFactory::class)->getMock();
+        //        $factory->method('initConverter')->with($connection, $options)->willReturn($factory);
+        //        $factory->method('fromDocument')->willReturn($converter);
+        //        $factory->method('fromSpreadsheet')->willReturn($converter);
         // <== end mocks init
 
         $factory->initConverter($connection, $options);

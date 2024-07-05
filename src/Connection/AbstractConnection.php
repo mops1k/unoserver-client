@@ -11,6 +11,9 @@ abstract class AbstractConnection implements ConnectionInterface
      */
     protected array $options = [];
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function __construct(array $options)
     {
         $resolver = new OptionsResolver();

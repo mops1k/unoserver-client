@@ -54,7 +54,8 @@ class Converter implements ConverterInterface
         } catch (\ValueError) {
             throw new FormatNotSupportedException(\sprintf(
                 'The format "%s" is not supported by source %s.',
-                !$format instanceof Format ? $format : $format->value,
+                /* @phpstan-ignore-next-line */
+                (!$format instanceof Format) ? $format : $format->value,
                 $this->sourceFile::class
             ));
         }
