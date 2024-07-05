@@ -10,7 +10,7 @@ interface ClientBuilderInterface
      * @param class-string<ConnectionInterface> $connectionTypeName
      * @param array<string, mixed>              $options
      */
-    public function initConverter(string $connectionTypeName, array $options): self;
+    public function init(string $connectionTypeName, array $options): self;
 
     public function fromDocument(string $path, bool $deleteSourceFileOnSuccess = false): ClientInterface;
 

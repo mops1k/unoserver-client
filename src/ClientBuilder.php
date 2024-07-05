@@ -14,7 +14,7 @@ class ClientBuilder implements ClientBuilderInterface
      * @param class-string<ConnectionInterface> $connectionTypeName
      * @param array<string, mixed>              $options
      */
-    public function initConverter(string $connectionTypeName, array $options): self
+    public function init(string $connectionTypeName, array $options): self
     {
         $connection = new $connectionTypeName($options);
         $this->converter = new Client($connection);

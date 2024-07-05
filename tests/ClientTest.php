@@ -73,7 +73,7 @@ class ClientTest extends TestCase
         $this->expectExceptionMessage('The format "php" is not supported by source Unoserver\Converter\Source\Document.');
         $options['host'] = 'unoserver';
         $factory = new ClientBuilder();
-        $factory->initConverter(Remote::class, $options);
+        $factory->init(Remote::class, $options);
         $converter = $factory->fromDocument(__DIR__.'/Stubs/Document.docx');
         $converter->toFormat('php');
     }
@@ -84,7 +84,7 @@ class ClientTest extends TestCase
         $this->expectExceptionMessage('The format "xlsx" is not supported by source Unoserver\Converter\Source\Document.');
         $options['host'] = 'unoserver';
         $factory = new ClientBuilder();
-        $factory->initConverter(Remote::class, $options);
+        $factory->init(Remote::class, $options);
         $converter = $factory->fromDocument(__DIR__.'/Stubs/Document.docx');
         $converter->toFormat(Format::XLSX);
     }
@@ -95,7 +95,7 @@ class ClientTest extends TestCase
         $this->expectExceptionMessage('Conversion process failed.');
         $options['command'] = '/somewhere/unoserver';
         $factory = new ClientBuilder();
-        $factory->initConverter(Local::class, $options);
+        $factory->init(Local::class, $options);
         $converter = $factory->fromDocument(__DIR__.'/Stubs/Document.docx');
         $converter->toFormat(Format::EPUB);
         $converter->convert();
@@ -137,7 +137,7 @@ class ClientTest extends TestCase
         }
         $factory = new ClientBuilder();
 
-        $factory->initConverter($connection, $options);
+        $factory->init($connection, $options);
         $converter = null;
         switch ($type) {
             case 'document':
