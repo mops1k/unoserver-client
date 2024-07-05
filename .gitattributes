@@ -1,0 +1,9 @@
+./tests                    export-ignore
+./pint.json                export-ignore
+./phpunit.xml.dist         export-ignore
+./phpstan.neon             export-ignore
+./.gitignore               export-ignore
+./README.md                export-ignore
+./LICENSE                  export-ignore
+./docker/                  export-ignore
+./compose.yaml             export-ignore
