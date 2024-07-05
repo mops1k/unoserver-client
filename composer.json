@@ -2,17 +2,34 @@
   "name": "mops1k/unoserver-client",
   "description": "PHP client for unoserver(ex. unoconv) converter.",
   "type": "library",
+  "keywords": [
+    "library",
+    "document",
+    "convert",
+    "converter",
+    "unoconv",
+    "unoserver",
+    "unoconvertor",
+    "client"
+  ],
+  "authors": [
+    {
+      "name": "Aleksandr Kvintilyanov",
+      "email": "bednyj.mops@gmail.com"
+    }
+  ],
   "require": {
     "php": "^8.1",
-    "symfony/process": "^6.0|^7.0",
-    "symfony/options-resolver": "^6.0|^7.0"
+    "symfony/options-resolver": "^6.0 || ^7.0",
+    "symfony/process": "^6.0 || ^7.0"
   },
   "require-dev": {
     "ext-fileinfo": "*",
-    "phpunit/phpunit": "11.2.6",
+    "ergebnis/composer-normalize": "^2.42",
     "laravel/pint": "1.16.1",
     "phpstan/phpstan": "1.11.6",
-    "phpstan/phpstan-phpunit": "1.4.0"
+    "phpstan/phpstan-phpunit": "1.4.0",
+    "phpunit/phpunit": "11.2.6"
   },
   "autoload": {
     "psr-4": {
@@ -23,5 +40,18 @@
     "psr-4": {
       "Unoserver\\Converter\\Test\\": "./tests"
     }
+  },
+  "config": {
+    "allow-plugins": {
+      "ergebnis/composer-normalize": true
+    }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "composer normalize"
+    ],
+    "post-update-cmd": [
+      "composer normalize"
+    ]
   }
 }
