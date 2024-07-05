@@ -1,0 +1,27 @@
+{
+  "name": "mops1k/unoserver-client",
+  "description": "PHP client for unoserver(ex. unoconv) converter.",
+  "type": "library",
+  "require": {
+    "php": "^8.1",
+    "symfony/process": "^7.0",
+    "symfony/options-resolver": "^7.0"
+  },
+  "require-dev": {
+    "ext-fileinfo": "*",
+    "phpunit/phpunit": "11.2.6",
+    "laravel/pint": "1.16.1",
+    "phpstan/phpstan": "1.11.6",
+    "phpstan/phpstan-phpunit": "1.4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Unoserver\\Converter\\": "./src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Unoserver\\Converter\\Test\\": "./tests"
+    }
+  }
+}
