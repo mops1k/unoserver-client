@@ -4,9 +4,9 @@ namespace Unoserver\Converter\Test;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Unoserver\Converter\Connection\ConnectionInterface;
-use Unoserver\Converter\Connection\Local;
-use Unoserver\Converter\Connection\Remote;
+use Unoserver\Converter\Wrapper\WrapperInterface;
+use Unoserver\Converter\Wrapper\Local;
+use Unoserver\Converter\Wrapper\Remote;
 use Unoserver\Converter\Client;
 use Unoserver\Converter\ClientBuilder;
 use Unoserver\Converter\Exception\ConversionException;
@@ -67,6 +67,20 @@ class ClientTest extends TestCase
         );
     }
 
+    public function testFromFileDeletedAfterConversion(): void
+    {
+        $tempFile = tempnam('/tmp', 'UNOCONVERT_TEST_');
+        copy(__DIR__.'/Stubs/Document.docx', $tempFile);
+        self::assertFileExists($tempFile);
+        $builder = new ClientBuilder();
+        $builder->init(Remote::class, ['host' => 'unoserver']);
+        $client = $builder->fromDocument($tempFile, true);
+        $convertedFile = $client->convert();
+
+        self::assertFileDoesNotExist($tempFile);
+        unlink($convertedFile->getPathname());
+    }
+
     public function testBadFormatEnum(): void
     {
         $this->expectException(FormatNotSupportedException::class);
@@ -118,7 +132,7 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @param class-string<ConnectionInterface> $connection
+     * @param class-string<WrapperInterface> $connection
      * @param int|list<int>                     $size
      *
      * @throws SourceNotDefinedException

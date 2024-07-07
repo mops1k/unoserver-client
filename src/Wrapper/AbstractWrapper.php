@@ -1,10 +1,10 @@
 <?php
 
-namespace Unoserver\Converter\Connection;
+namespace Unoserver\Converter\Wrapper;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class AbstractConnection implements ConnectionInterface
+abstract class AbstractWrapper implements WrapperInterface
 {
     /**
      * @var array<string, mixed>
@@ -17,6 +17,9 @@ abstract class AbstractConnection implements ConnectionInterface
     public function __construct(array $options)
     {
         $resolver = new OptionsResolver();
+        $resolver->setRequired('command');
+        $resolver->setAllowedTypes('command', ['string', 'null']);
+
         $this->configure($resolver);
         $this->options = $resolver->resolve($options);
     }

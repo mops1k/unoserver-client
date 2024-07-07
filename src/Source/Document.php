@@ -4,11 +4,8 @@ namespace Unoserver\Converter\Source;
 
 class Document extends AbstractSource
 {
-    public function isSupportConversionFormat(Format $format): bool
+    public function getSupportedConversionFormats(): array
     {
-        return \in_array(
-            $format,
-            [Format::PDF, Format::HTML, Format::DOC, Format::DOCX, Format::EPUB]
-        );
+        return [Format::PDF, Format::HTML, Format::DOC, Format::DOCX, Format::ODT, Format::RTF, Format::EPUB, Format::TXT];
     }
 }

@@ -1,18 +1,17 @@
 <?php
 
-namespace Unoserver\Converter\Connection;
+namespace Unoserver\Converter\Wrapper;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
 
-class Remote extends AbstractConnection
+class Local extends AbstractWrapper
 {
     public function configure(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'command' => '/usr/bin/unoconvert',
-            'host' => '127.0.0.1',
-            'port' => '2003',
+            'command' => null,
         ]);
     }
 
@@ -20,15 +19,14 @@ class Remote extends AbstractConnection
     {
         return Process::fromShellCommandline(
             implode(' ', [
-                $this->options['command'],
-                '--host',
-                $this->options['host'],
-                '--port',
-                $this->options['port'],
+                $this->options['command'] ?? (new ExecutableFinder())->find('unoconvert'),
                 '--host-location',
-                'remote',
+                'local',
+                '--host',
+                '127.0.0.1',
+                '--port',
+                2003,
                 '--convert-to',
-                $format,
                 '-',
                 '-',
                 '<',

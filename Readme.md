@@ -9,10 +9,11 @@ composer require mops1k/unoserver-client
 ### Usage example
 
 1. From document:
+
 ```php
 <?php
 use Unoserver\Converter\ClientBuilder;
-use Unoserver\Converter\Connection\Remote;
+use Unoserver\Converter\Wrapper\Remote;
 use Unoserver\Converter\Source\Format;
 
 $builder = new ClientBuilder();
@@ -26,10 +27,11 @@ $client->toFormat(Format::PDF); // set format to convert to
 $file = $client->convert(); // will return \SplFileInfo object with converted file
 ```
 2. From spreadsheet:
+
 ```php
 <?php
 use Unoserver\Converter\ClientBuilder;
-use Unoserver\Converter\Connection\Remote;
+use Unoserver\Converter\Wrapper\Remote;
 use Unoserver\Converter\Source\Format;
 
 $builder = new ClientBuilder();

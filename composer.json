@@ -1,8 +1,8 @@
 {
   "name": "mops1k/unoserver-client",
   "description": "PHP client for unoserver(ex. unoconv) converter.",
-  "type": "library",
   "license": "MIT",
+  "type": "library",
   "keywords": [
     "library",
     "document",

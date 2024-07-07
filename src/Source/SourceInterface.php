@@ -2,7 +2,7 @@
 
 namespace Unoserver\Converter\Source;
 
-use Unoserver\Converter\Connection\ConnectionInterface;
+use Unoserver\Converter\Wrapper\WrapperInterface;
 use Unoserver\Converter\Exception\ConversionException;
 
 interface SourceInterface
@@ -11,10 +11,10 @@ interface SourceInterface
 
     public function isDeletable(): bool;
 
-    public function isSupportConversionFormat(Format $format): bool;
+    public function isSupportConversionFormat(FormatInterface $format): bool;
 
     /**
      * @throws ConversionException
      */
-    public function convert(ConnectionInterface $connection, Format $format): \SplFileInfo;
+    public function convert(WrapperInterface $connection, FormatInterface $format): \SplFileInfo;
 }

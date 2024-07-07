@@ -2,24 +2,25 @@
 
 namespace Unoserver\Converter;
 
-use Unoserver\Converter\Connection\ConnectionInterface;
+use Unoserver\Converter\Wrapper\WrapperInterface;
 use Unoserver\Converter\Exception\ConversionException;
 use Unoserver\Converter\Exception\FormatNotSupportedException;
 use Unoserver\Converter\Exception\SourceNotDefinedException;
 use Unoserver\Converter\Source\Format;
+use Unoserver\Converter\Source\FormatInterface;
 use Unoserver\Converter\Source\SourceInterface;
 
 class Client implements ClientInterface
 {
-    protected ConnectionInterface $connection;
+    protected WrapperInterface $connection;
 
-    public function __construct(ConnectionInterface $connection)
+    public function __construct(WrapperInterface $connection)
     {
         $this->connection = $connection;
     }
 
     protected ?SourceInterface $sourceFile = null;
-    protected Format $format = Format::PDF;
+    protected FormatInterface $format = Format::PDF;
 
     public function fromSource(SourceInterface $source): self
     {
@@ -33,17 +34,23 @@ class Client implements ClientInterface
      *
      * @throws \Exception
      */
-    public function toFormat(string|Format $format): self
+    public function toFormat(string|FormatInterface $format): self
     {
         try {
             $formatEnum = $format;
             if (is_string($format)) {
                 $formatEnum = Format::from($format);
             }
+            if (!$format instanceof \BackedEnum) {
+                throw new \InvalidArgumentException(\sprintf(
+                    'Format must be type of string or enum, %s given.',
+                    gettype($format),
+                ));
+            }
             if (!$this->sourceFile->isSupportConversionFormat($formatEnum)) {
                 throw new FormatNotSupportedException(\sprintf(
                     'The format "%s" is not supported by source %s.',
-                    !$format instanceof Format ? $format : $format->value,
+                    $format->value,
                     $this->sourceFile::class
                 ));
             }

@@ -1,11 +1,11 @@
 <?php
 
-namespace Unoserver\Converter\Connection;
+namespace Unoserver\Converter\Wrapper;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Process\Process;
 
-interface ConnectionInterface
+interface WrapperInterface
 {
     public function configure(OptionsResolver $resolver): void;
 
