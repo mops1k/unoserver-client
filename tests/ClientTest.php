@@ -239,5 +239,26 @@ class ClientTest extends TestCase
             'size' => 5632,
             'mimeType' => 'application/vnd.ms-excel',
         ];
+        yield 'Convert presentation to pdf' => [
+            'path' => __DIR__.'/Stubs/Presentation.pptx',
+            'type' => 'presentation',
+            'format' => Format::PDF,
+            'size' => 8345,
+            'mimeType' => 'application/pdf',
+        ];
+        yield 'Convert presentation to ppt' => [
+            'path' => __DIR__.'/Stubs/Presentation.pptx',
+            'type' => 'presentation',
+            'format' => Format::PPT,
+            'size' => 492544,
+            'mimeType' => 'application/vnd.ms-powerpoint',
+        ];
+        yield 'Convert presentation to odp' => [
+            'path' => __DIR__.'/Stubs/Presentation.pptx',
+            'type' => 'presentation',
+            'format' => Format::ODP,
+            'size' => [20371, 20375, 20376, 20379],
+            'mimeType' => 'application/vnd.oasis.opendocument.presentation',
+        ];
     }
 }
