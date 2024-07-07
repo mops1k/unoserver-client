@@ -132,13 +132,13 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @param class-string<WrapperInterface> $connection
-     * @param int|list<int>                     $size
+     * @param class-string<WrapperInterface> $wrapper
+     * @param int|list<int> $size
      *
-     * @throws SourceNotDefinedException
+     * @throws SourceFileNotExistsException
      */
     private function runConverterTester(
-        string $connection,
+        string $wrapper,
         string $path,
         string $type,
         string|Format $format,
@@ -146,12 +146,12 @@ class ClientTest extends TestCase
         string $mimeType
     ): void {
         $options = [];
-        if (Remote::class === $connection) {
+        if (Remote::class === $wrapper) {
             $options['host'] = 'unoserver';
         }
         $factory = new ClientBuilder();
 
-        $factory->init($connection, $options);
+        $factory->init($wrapper, $options);
         $converter = null;
         switch ($type) {
             case 'document':
@@ -159,6 +159,9 @@ class ClientTest extends TestCase
                 break;
             case 'spreadsheet':
                 $converter = $factory->fromSpreadsheet($path);
+                break;
+            case 'presentation':
+                $converter = $factory->fromPresentation($path);
                 break;
         }
         if (null === $converter) {
